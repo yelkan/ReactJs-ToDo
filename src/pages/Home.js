@@ -32,7 +32,8 @@ const Home = (props) => {
                 if (todo.id === id) {
                     return {
                         ...todo,
-                        completed: !todo.completed
+                        completed: !todo.completed,
+                        changeDate: new Date().toLocaleString()
                     }
                 }
                 return todo;
@@ -54,7 +55,8 @@ const Home = (props) => {
         const newTodo = {
             id: uuidv4(),
             title: title,
-            completed: false
+            completed: false,
+            date: new Date().toLocaleString()
         };
         setTodos([...todos, newTodo]);
     }
@@ -63,7 +65,8 @@ const Home = (props) => {
         setTodos(
             todos.map(todo => {
                 if (todo.id === id) {
-                    todo.title = updatedTitle
+                    todo.title = updatedTitle;
+                    todo.changeDate= new Date().toLocaleString();
                 }
                 return todo
             })

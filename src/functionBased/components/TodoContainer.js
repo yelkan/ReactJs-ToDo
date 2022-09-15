@@ -1,12 +1,7 @@
-import React, { useState, useEffect, useContext } from "react";
-import { v4 as uuidv4 } from "uuid";
+import React, { useContext } from "react";
 import { Route, Switch } from "react-router-dom"
-import Header from "./Header";
-import TodosList from "./TodosList";
-import InputTodo from './InputTodo';
 import About from "../../pages/About";
 import NotMatch from "../../pages/NotMatch";
-import Navbar from "./Navbar";
 import { ThemeContext } from "../contexts/ThemeContext";
 import { AuthContext } from "../contexts/AuthContext";
 import Login from "../../pages/Login";

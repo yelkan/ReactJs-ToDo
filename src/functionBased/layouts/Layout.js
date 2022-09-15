@@ -1,13 +1,14 @@
 import React from "react";
-import Navbar from "../components/Navbar";
+import ResponsiveAppBar from "../components/AppBar";
 
-const Layout = (props) => {
-    const {children} = props;
+function Layout(props) {
+    const { children } = props;
     return (
-    <div>
-        <Navbar/>
-        {children}
-    </div>
+        <div>
+            {/* <Navbar/> */}
+            <ResponsiveAppBar />
+            {children}
+        </div>
     );
 }
 

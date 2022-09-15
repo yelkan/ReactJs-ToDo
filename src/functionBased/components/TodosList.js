@@ -1,9 +1,10 @@
-import React, { useContext } from "react";
+import React from "react";
 import TodoItem from "./TodoItem";
+import Timeline from '@mui/lab/Timeline';
 
 const TodosList = props => {
     return (
-        <ul>
+        <Timeline position="alternate">
             {props.todos.map(todo => (
                 <TodoItem
                     key={todo.id}
@@ -13,7 +14,7 @@ const TodosList = props => {
                     setUpdateProps={props.setUpdateProps}
                 />
             ))}
-        </ul>
+        </Timeline>
     )
 }
 

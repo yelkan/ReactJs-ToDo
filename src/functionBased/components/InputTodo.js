@@ -1,6 +1,10 @@
 import React, { useState } from "react"
 import { FaPlusCircle } from "react-icons/fa"
 import { IconContext } from "react-icons"
+import Button from '@mui/material/Button';
+import { Box, IconButton, TextField } from "@mui/material";
+import AddIcon from '@mui/icons-material/Add';
+import ClearIcon from '@mui/icons-material/Clear';
 
 
 const InputTodo = props => {
@@ -15,6 +19,11 @@ const InputTodo = props => {
         })
     }
 
+    const handleClearClick = () => {
+        setInputText({
+            title: "",
+        })
+    };
     const handleSubmit = e => {
         e.preventDefault()
         if (inputText.title.trim()) {
@@ -28,17 +37,35 @@ const InputTodo = props => {
     }
 
     return (
-        <form onSubmit={handleSubmit} className="form-container">
-            <input
-                type="text"
-                className="input-text"
-                placeholder="Add todo..."
+        <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 1 }}>
+            <TextField
+                onChange={onChange}
+                variant="outlined"
+                defaultValue={inputText.title}
+                fullWidth
                 value={inputText.title}
                 name="title"
-                onChange={onChange}
+                InputProps={{
+                    endAdornment: (
+                        <>
+                            <IconButton
+                                sx={{ visibility: inputText.title ? "visible" : "hidden" }}
+                                onClick={handleClearClick}
+                            >
+                                <ClearIcon />
+                            </IconButton>
+                            <IconButton
+                                sx={{ visibility: inputText.title ? "visible" : "hidden" }}
+                                onClick={handleSubmit}
+                            >
+                                <AddIcon />
+                            </IconButton>
+                        </>
+                    ),
+                }}
             />
-            <button className="input-submit"><FaPlusCircle style={{ color: "darkcyan", fontSize: "20px", marginTop: "2px" }} /></button>
-        </form>
+
+        </Box>
     )
 }
 
