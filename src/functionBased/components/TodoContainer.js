@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { v4 as uuidv4 } from "uuid";
 import { Route, Switch } from "react-router-dom"
 import Header from "./Header";
@@ -7,10 +7,15 @@ import InputTodo from './InputTodo';
 import About from "../../pages/About";
 import NotMatch from "../../pages/NotMatch";
 import Navbar from "./Navbar";
+import { ThemeContext } from "../contexts/ThemeContext";
+import { AuthContext } from "../contexts/AuthContext";
+import Login from "../../pages/Login";
 
 const TodoContainer = () => {
+    const { state: { isLoggedIn } } = useContext(AuthContext);
 
     const [todos, setTodos] = useState(getInitialTodos());
+    const { theme } = useContext(ThemeContext);
 
     useEffect(() => {
         //storing todos items.
@@ -68,32 +73,45 @@ const TodoContainer = () => {
             })
         )
     }
+
+    console.log(isLoggedIn);
     return (
-        <>
-            <Navbar />
-            <Switch>
-                <Route exact path="/">
-                    <div className="container">
-                        <div className="inner">
-                            <Header />
-                            <InputTodo addTodoProps={addTodoItem} />
-                            <TodosList
-                                todos={todos}
-                                handleChangeProps={handleChange}
-                                deleteTodoProps={delTodo}
-                                setUpdateProps={setUpdate}
-                            />
-                        </div>
-                    </div>
-                </Route>
-                <Route path="/about">
-                    <About />
-                </Route>
-                <Route path="*">
-                    <NotMatch />
-                </Route>
-            </Switch>
-        </>
+        <main className={theme === "dark" ? "dark-theme" : ""}>
+            {isLoggedIn ? (
+                <>
+                    <Navbar />
+                    <Switch>
+                        <Route exact path="/">
+                            <div className="container">
+                                <div className="inner">
+                                    <Header />
+                                    <InputTodo addTodoProps={addTodoItem} />
+                                    <TodosList
+                                        todos={todos}
+                                        handleChangeProps={handleChange}
+                                        deleteTodoProps={delTodo}
+                                        setUpdateProps={setUpdate}
+                                    />
+                                </div>
+                            </div>
+                        </Route>
+                        <Route path="/about">
+                            <About />
+                        </Route>
+                        <Route path="*">
+                            <NotMatch />
+                        </Route>
+                    </Switch>
+                </>
+            ) : (
+                <Switch>
+                    <Route path="*">
+                        <Login />
+                    </Route>
+                </Switch>
+            )}
+
+        </main>
     )
 }
 
