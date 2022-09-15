@@ -10,90 +10,20 @@ import Navbar from "./Navbar";
 import { ThemeContext } from "../contexts/ThemeContext";
 import { AuthContext } from "../contexts/AuthContext";
 import Login from "../../pages/Login";
+import Home from "../../pages/Home";
+import Layout from "../layouts/Layout";
 
 const TodoContainer = () => {
     const { state: { isLoggedIn } } = useContext(AuthContext);
-
-    const [todos, setTodos] = useState(getInitialTodos());
     const { theme } = useContext(ThemeContext);
 
-    useEffect(() => {
-        //storing todos items.
-        const temp = JSON.stringify(todos);
-        localStorage.setItem("todos", temp);
-    }, [todos]);
-
-
-    function getInitialTodos() {
-        const temp = localStorage.getItem("todos");
-        const loadedTodos = JSON.parse(temp);
-        return loadedTodos || []
-    }
-
-    const handleChange = (id) => {
-        setTodos(prevState => (
-            prevState.map(todo => {
-                if (todo.id === id) {
-                    return {
-                        ...todo,
-                        completed: !todo.completed
-                    }
-                }
-                return todo;
-            })
-        ))
-    }
-
-    const delTodo = id => {
-        setTodos(
-            [
-                ...todos.filter(todo => {
-                    return todo.id !== id;
-                })
-            ]
-        )
-    }
-
-    const addTodoItem = title => {
-        const newTodo = {
-            id: uuidv4(),
-            title: title,
-            completed: false
-        };
-        setTodos([...todos, newTodo]);
-    }
-
-    const setUpdate = (updatedTitle, id) => {
-        setTodos(
-            todos.map(todo => {
-                if (todo.id === id) {
-                    todo.title = updatedTitle
-                }
-                return todo
-            })
-        )
-    }
-
-    console.log(isLoggedIn);
     return (
         <main className={theme === "dark" ? "dark-theme" : ""}>
             {isLoggedIn ? (
-                <>
-                    <Navbar />
+                <Layout>
                     <Switch>
                         <Route exact path="/">
-                            <div className="container">
-                                <div className="inner">
-                                    <Header />
-                                    <InputTodo addTodoProps={addTodoItem} />
-                                    <TodosList
-                                        todos={todos}
-                                        handleChangeProps={handleChange}
-                                        deleteTodoProps={delTodo}
-                                        setUpdateProps={setUpdate}
-                                    />
-                                </div>
-                            </div>
+                           <Home />
                         </Route>
                         <Route path="/about">
                             <About />
@@ -102,7 +32,7 @@ const TodoContainer = () => {
                             <NotMatch />
                         </Route>
                     </Switch>
-                </>
+                </Layout>
             ) : (
                 <Switch>
                     <Route path="*">

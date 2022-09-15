@@ -22,16 +22,8 @@ const InputUser = props => {
         e.preventDefault()
         const { username, password } = inputText;
 
-        if (!username.trim()) {
-            alert("Please write username");
-            return;
-        }
         if (username.length < 3) {
             alert("Username minimum length must greater than 3");
-            return;
-        }
-        if (!password.trim()) {
-            alert("Please write password");
             return;
         }
         if (password.length < 3) {
@@ -54,6 +46,7 @@ const InputUser = props => {
         <form onSubmit={handleSubmit} className="form-container login">
             <h1>{props.title}</h1>
             <input
+                required
                 type="text"
                 className="input-text"
                 style={inputStyle}
@@ -64,6 +57,7 @@ const InputUser = props => {
             />
             <input
                 type="password"
+                required
                 className="input-text"
                 style={inputStyle}
                 placeholder="Password..."
